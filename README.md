@@ -7,7 +7,7 @@ This addon allow direct communication between your esphome devices.
 ## Other solutions
 * Using RF and IR module, but this requires additional hardwares
 
-## Why ESP-NOW?
+## Why esp-now?
 * Works even without WiFi connection
 * Other WiFi functionality remains the same
 * No addition hardware needed
@@ -124,3 +124,19 @@ custom_component:
     return {};
 
 ```
+
+## What's next
+
+* Adding PSK encryption support
+* Adding ESP32 support
+* Sending typed data as argument
+* Sending to a specific peer
+* and much more...
+
+## Acknowledgments
+
+This project is part of my smarthome project that build entirely with esphome. There are more real life examples you might want to check it out at [https://github.com/iphong/ha-config](https://github.com/iphong/ha-config).
+
+You are free to use and modify these code to better fit your project.
+
+Cheers!!
