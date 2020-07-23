@@ -14,7 +14,7 @@ This addon allow direct communication between your esphome devices.
 
 ## Usage
 
-A. A main device contains simple gpio switch
+1. A main device contains simple gpio switch and a light
 
 ```yaml
 
@@ -24,9 +24,20 @@ esphome:
   includes:
   - esp_now_connect.h
 
-switch:
+output:
 - platform: gpio
   pin: 13
+  id: my_output
+
+light:
+- platform: binary
+  output: my_output
+  id: my_light
+  name: My Light
+
+switch:
+- platform: gpio
+  pin: 12
   id: my_switch
   on_turn_on:
   - lambda: ESPNow.send("my_switch on");
@@ -37,13 +48,13 @@ custom_component:
 - lambda: |-
     ESPNow.begin(2);
     ESPNow.on("my_motion on", []() {
-      id(my_switch)->turn_on();
+      id(my_light)->turn_on().perform();
     });
     ESPNow.on("my_motion off", []() {
-      id(my_switch)->turn_off();
+      id(my_light)->turn_off().perform();
     });
     ESPNow.on("status my_switch", []() {
-      if (id(my_switch)->is_on()) {
+      if (id(my_switch).state) {
         ESPNow.send("my_switch on");
       } else {
         ESPNow.send("my_switch off");
@@ -76,6 +87,7 @@ custom_component:
 - lambda: |-
     ESPNow.begin(2);
     return {};
+
 ```
 
 3. A third device contains a LED state indicator of the switch on device 1
@@ -88,10 +100,16 @@ esphome:
   includes:
   - esp_now_connect.h
 
-light:
+output:
 - platform: gpio
   pin: 13
+  id: my_output
+
+light:
+- platform: binary
+  output: my_output
   id: my_light
+  name: My Light
 
 custom_component:
 - lambda: |-
@@ -104,4 +122,5 @@ custom_component:
     });
     ESPNow.send("status my_switch");
     return {};
+
 ```
