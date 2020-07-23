@@ -17,7 +17,7 @@ struct cmd_cb_t {
     cmd_handler_cb_t handler;
 };
 
-cmd_cb_t handlers[] = {};
+cmd_cb_t handlers[20] = {};
 uint8_t handler_count = 0;
 String msg;
 
