@@ -5,14 +5,19 @@ This addon allow direct communication between your esphome devices.
 * EspHome is no doubt the best platform for creating your own DIY smart devices, but it requires a WiFi router and HomeAssistant in order to communicate.
 
 ## Other solutions
-* Using RF and IR module, but this requires additional hardwares
+* Using BT, RF or IR module, but this requires additional hardwares
 
 ## Why esp-now?
-* Works even without WiFi connection
-* Other WiFi functionality remains the same
+* Works with or without WiFi connection
+* Works with or without HomeAssistant
+* Instant startup time if not using wifi
 * No addition hardware needed
+* Easy to use pub/sub event model
+* Send and receive from multiple devices
 
 ## Usage
+
+ATTENTION: Make sure to use the latest arduino version as this uses the new esp-now broadcast feature. And it's recommended to use the same channel as your wifi router.
 
 1. A main device contains simple gpio switch and a light
 
