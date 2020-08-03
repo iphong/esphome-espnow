@@ -15,7 +15,29 @@ This addon allow direct communication between your esphome devices.
 * Easy to use pub/sub event model
 * Send and receive from multiple devices
 
-## Usage
+### NEW UPDATE: esp_rc.h
+
+1. To prevent conflict with EspNow namespace, i will use the namespace EspRC instead.
+2. You can now receive and send message with arguments
+
+```c++
+EspRC.on("bedroom light", [](String state) {
+  if (state.equals("on")) {
+    // do something
+  } else {
+    // do some thing else
+  }
+});
+EspRC.on("bedroom temp", [](Int value) {
+  // Do something with int value
+});
+EspRC.send("bedroom light", "on");
+EspRC.send("bedroom temp", 28);
+
+```
+
+
+## Usage examples
 
 ATTENTION: Make sure to use the latest arduino version as this uses the new esp-now broadcast feature. And it's recommended to use the same channel as your wifi router.
 
