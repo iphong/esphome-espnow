@@ -34,7 +34,8 @@ void esp_rc_handle_massge(String msg) {
                 listener.callback();
             }
             if (listener.str_callback) {
-                String value = msg.substring(sizeof(listener.subscribe), msg.length());
+                String value = msg.substring(listener.subscribe.length(), msg.length());
+                value.trim();
                 listener.str_callback(value);
             }
         }
@@ -88,3 +89,4 @@ public:
 } EspRC;
 
 #endif //ESP_RC_H
+
