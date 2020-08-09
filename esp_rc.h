@@ -1,6 +1,10 @@
 //
 // Author: Phong Vu
 //
+
+// THIS CODE IS OUTDATED
+// CHECK OUT THE LATEST CODE AT https://github.com/iphong/lib-esp-rc
+
 #ifndef ESP_RC_H
 #define ESP_RC_H
 
