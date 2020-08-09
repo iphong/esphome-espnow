@@ -1,4 +1,11 @@
-# ESP-NOW Integration for ESPHome
+# ESP-NOW Integration for ESPHomE
+
+ESP_RC IS NOW A STANDALONE LIBRARY AND HAS BEEN MOVED TO https://github.com/iphong/lib-esp-rc
+
+THIS REPO WILL ONLY FOCUS ON ESPHOME & HOMEASSISTANT INTEGRATION
+
+----------------
+
 This addon allow direct communication between your esphome devices.
 
 ## The Problem
