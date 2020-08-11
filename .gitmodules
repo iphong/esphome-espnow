@@ -1,0 +1,3 @@
+[submodule "EspRC"]
+	path = EspRC
+	url = https://github.com/iphong/lib-esp-rc
