@@ -22,28 +22,6 @@ This addon allow direct communication between your esphome devices.
 * Easy to use pub/sub event model
 * Send and receive from multiple devices
 
-### NEW UPDATE: esp_rc.h
-
-1. To prevent conflict with EspNow namespace, i will use the namespace EspRC instead.
-2. You can now receive and send message with arguments
-
-```c++
-EspRC.on("bedroom light", [](String state) {
-  if (state.equals("on")) {
-    // do something
-  } else {
-    // do some thing else
-  }
-});
-EspRC.on("bedroom temp", [](Int value) {
-  // Do something with int value
-});
-EspRC.send("bedroom light", "on");
-EspRC.send("bedroom temp", 28);
-
-```
-
-
 ## Usage examples
 
 ATTENTION: Make sure to use the latest arduino version as this uses the new esp-now broadcast feature. And it's recommended to use the same channel as your wifi router.
@@ -74,24 +52,24 @@ switch:
   pin: 12
   id: my_switch
   on_turn_on:
-  - lambda: ESPNow.send("my_switch on");
+  - lambda: EspRC.send("my_switch on");
   on_turn_off:
-  - lambda: ESPNow.send("my_switch off");
+  - lambda: EspRC.send("my_switch off");
 
 custom_component:
 - lambda: |-
-    ESPNow.begin(2);
-    ESPNow.on("my_motion on", []() {
+    EspRC.begin(2);
+    EspRC.on("my_motion on", []() {
       id(my_light)->turn_on().perform();
     });
-    ESPNow.on("my_motion off", []() {
+    EspRC.on("my_motion off", []() {
       id(my_light)->turn_off().perform();
     });
-    ESPNow.on("status my_switch", []() {
+    EspRC.on("status my_switch", []() {
       if (id(my_switch).state) {
-        ESPNow.send("my_switch on");
+        EspRC.send("my_switch on");
       } else {
-        ESPNow.send("my_switch off");
+        EspRC.send("my_switch off");
       }
     });
     return {};
@@ -113,13 +91,13 @@ binary_sensor:
   pin: 2
   id: my_motion
   on_press:
-  - lambda: ESPNow.send("my_motion on");
+  - lambda: EspRC.send("my_motion on");
   on_release:
-  - lambda: ESPNow.send("my_motion off");
+  - lambda: EspRC.send("my_motion off");
 
 custom_component:
 - lambda: |-
-    ESPNow.begin(2);
+    EspRC.begin(2);
     return {};
 
 ```
@@ -147,16 +125,61 @@ light:
 
 custom_component:
 - lambda: |-
-    ESPNow.begin(2);
-    ESPNow.on("my_switch on", []() {
+    EspRC.begin(2);
+    EspRC.on("my_switch on", []() {
       id(my_light)->turn_on().perform();
     });
-    ESPNow.on("my_switch off", []() {
+    EspRC.on("my_switch off", []() {
       id(my_light)->turn_off().perform();
     });
-    ESPNow.send("status my_switch");
+    EspRC.send("status my_switch");
     return {};
 
+```
+
+### CHANGE LOGS:
+
+Update 1:
+
+1. To prevent conflict with EspRC namespace, i will use the namespace EspRC instead.
+2. You can now receive and send message with arguments but this method is having performance issues.
+
+```c++
+EspRC.on("bedroom light", [](String state) {
+  if (state.equals("on")) {
+    // do something
+  } else {
+    // do some thing else
+  }
+});
+EspRC.on("bedroom temp", [](Int value) {
+  // Do something with int value
+});
+EspRC.send("bedroom light", "on");
+EspRC.send("bedroom temp", 28);
+
+```
+
+Update 2:
+
+1. A different way to get data. This method works better
+than the previous update
+
+```c++
+EspRC.on("bedroom light", []() {
+  String state = EspRC.getValue();
+  if (state.equals("on")) {
+    // do something
+  } else {
+    // do some thing else
+  }
+});
+EspRC.on("bedroom temp", []() {
+  Int value = EspRC.getValue().toInt();
+  // Do something with int value
+});
+EspRC.send("bedroom light", "on");
+EspRC.send("bedroom temp", 28);
 ```
 
 ## What's next
